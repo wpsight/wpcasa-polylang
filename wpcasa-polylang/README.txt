@@ -45,6 +45,7 @@ No, this is an add-on plugin for the WPCasa real estate framework in combination
 1. Polylang string translation of WPCasa details
 2. Property management with language options
 3. Polylang taxonomy term translation
+4. Polylang language switcher in menu
 
 == Changelog ==
 
