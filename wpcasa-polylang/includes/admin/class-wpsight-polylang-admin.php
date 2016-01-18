@@ -22,8 +22,11 @@ class WPSight_Polylang_Admin {
 		// Set agent description for each language
 		add_action( 'wpsight_profile_agent_update_save_options', array( $this, 'updated_agent_description' ), 10, 2 );
 		
-		// Set agent description defaul in listing editor
+		// Set agent description default in listing editor
 		add_filter( 'wpsight_meta_box_listing_agent_fields', array( $this, 'listing_agent_description' ) );
+		
+		// Remove agent desription from copied post meta
+		add_filter( 'pll_copy_post_metas', array( $this, 'copy_post_metas' ) );
 
 	}
 	
@@ -126,40 +129,79 @@ class WPSight_Polylang_Admin {
 	 *	listing_agent_description()
 	 *	
 	 *	Set the default agent description
-	 *	depending on the post language if
-	 *	already set.
+	 *	by callback function to get post
+	 *	ID first.
 	 *	
 	 *	@access	public
 	 *	@param	array	$fields
-	 *	@uses	pll_get_post_language()
-	 *	@uses	wp_get_current_user()
-	 *	@uses	get_user_meta()
-	 *	@return	array	$fields
 	 *	
 	 *	@since 1.0.0
 	 */
 	public function listing_agent_description( $fields ) {
 		
-		// Get post ID early
-		$post_id = isset( $_REQUEST['post'] ) ? $_REQUEST['post'] : false;
+		// Get post lang early
+		$new_lang = isset( $_REQUEST['new_lang'] ) ? $_REQUEST['new_lang'] : false;
 		
-		if( $post_id ) {
-		
-			// Get post language
-			$post_lang = pll_get_post_language( $post_id );
-			
-			// Get default description		
-			$description = get_user_meta( wp_get_current_user()->ID, 'description', true );
-			
-			// Get description in post language
-			$description_lang = get_user_meta( wp_get_current_user()->ID, 'description_' . $post_lang, true );
-			
+		if( $new_lang ) {			
 			// Set default value of desription
-			$fields['description']['default'] = $description_lang ? $description_lang : $description;
-		
+			$fields['description']['default'] = array( $this, 'listing_agent_description_default' );
 		}
 		
 		return $fields;
+		
+	}
+	
+	/**
+	 *	listing_agent_description_default()
+	 *	
+	 *	Set the default agent description
+	 *	depending on the post language if
+	 *	already set.
+	 *	
+	 *	@access	public
+	 *	@param	array	$field_args
+	 *	@param	object	$field
+	 *	@uses	pll_get_post_language()
+	 *	@uses	wp_get_current_user()
+	 *	@uses	get_user_meta()
+	 *	@return	string	$description
+	 *	
+	 *	@since 1.0.0
+	 */
+	public function listing_agent_description_default( $field_args, $field ) {
+		
+		$post_lang = pll_get_post_language( $field->object_id );
+		
+		// Get default description		
+		$description = get_user_meta( wp_get_current_user()->ID, 'description', true );
+		
+		if( $post_lang ) {			
+			// Get description in post language
+			$description = get_user_meta( wp_get_current_user()->ID, 'description_' . $post_lang, true );
+		}
+			
+		return $description;
+		
+	}
+	
+	/**
+	 *	copy_post_metas()
+	 *	
+	 *	Remove agent desription from
+	 *	copied post meta as we will
+	 *	set it ourselves.
+	 *	
+	 *	@access	public
+	 *	@param	array	$post_meta
+	 *	
+	 *	@since 1.0.0
+	 */
+	public function copy_post_metas( $post_meta ) {
+		
+		if( ( $key = array_search( '_agent_description', $post_meta ) ) !== false )
+			unset( $post_meta[ $key ] );
+			
+		return $post_meta;
 		
 	}
 
