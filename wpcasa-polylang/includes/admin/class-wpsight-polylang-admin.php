@@ -20,7 +20,10 @@ class WPSight_Polylang_Admin {
 		add_filter( 'wpsight_meta_box_user_fields', array( $this, 'user_fields' ) );
 		
 		// Set agent description for each language
-		add_action( 'wpsight_profile_agent_update_save_options', array( $this, 'updated_agent_description' ), 10, 2 );
+		add_action( 'wpsight_profile_agent_update_save_options', array( $this, 'agent_description_options' ), 10, 2 );
+		
+		// Correctly save the agent descriptions
+		add_filter( 'wpsight_profile_agent_update_post_meta', array( $this, 'agent_description_post_meta' ), 10, 4 );
 		
 		// Set agent description default in listing editor
 		add_filter( 'wpsight_meta_box_listing_agent_fields', array( $this, 'listing_agent_description' ) );
@@ -78,7 +81,7 @@ class WPSight_Polylang_Admin {
 	/**
 	 *	user_fields()
 	 *	
-	 *	We need the $_POST['description']
+	 *	Let's save the $_POST['description']
 	 *	value that seems to be removed
 	 *	by Polylang.
 	 *	
@@ -101,7 +104,7 @@ class WPSight_Polylang_Admin {
 	}
 	
 	/**
-	 *	updated_agent_description()
+	 *	agent_description_options()
 	 *	
 	 *	Correctly update agent description
 	 *	for all registered languages to
@@ -114,7 +117,7 @@ class WPSight_Polylang_Admin {
 	 *	
 	 *	@since 1.0.0
 	 */
-	public function updated_agent_description( $agent_options, $user_id ) {
+	public function agent_description_options( $agent_options, $user_id ) {
 	
 		// Set descriptions in all languages
 		
@@ -122,6 +125,40 @@ class WPSight_Polylang_Admin {
 			$agent_options[ '_agent_description_' . $lang ] = trim( $_POST[ 'description_' . $lang ] );
 		
 		return $agent_options;
+			
+	}
+
+	/**
+	 *	agent_description_post_meta()
+	 *	
+	 *	When agent information on profile
+	 *	is updated for all listings, make
+	 *	sure to set the correc description
+	 *	in the corresponding post language.
+	 *	
+	 *	@access	public
+	 *	@param	string	$getpost		The value set using update_post_meta
+	 *	@param	string	$option			The option key
+	 *	@param	integer	$post_id		The post ID of the updated listing
+	 *	@param	array	$agent_options	The entire array of agent options
+	 *	@uses	pll_get_post_language()
+	 *	
+	 *	@since 1.0.0
+	 */
+	public function agent_description_post_meta( $getpost, $option, $post_id, $agent_options ) {
+		
+		// Get post language
+		$post_lang = pll_get_post_language( $post_id );
+		
+		// Get agent description for language
+		$description_lang = $agent_options[ '_agent_description_' . $post_lang ];
+		
+		// Set agent description accordingly
+		
+		if( '_agent_description' == $option && isset( $description_lang ) )
+			$getpost = $description_lang;
+		
+		return $getpost;
 			
 	}
 	
