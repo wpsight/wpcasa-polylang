@@ -12,7 +12,7 @@ Add support for Polylang plugin to manage property data in multiple languages.
 
 == Description ==
 
-The WPCasa Polylang add-on is a bridge for the Polylang plugin to make sure all the listing details, rental periods and other strings that can be managed through the WPCasa settings are translated correctly.
+The WPCasa Polylang add-on is a bridge for the Polylang plugin to make sure all the listing details, rental periods and other text strings of WPCasa are translated correctly.
 
 > Please notice that this plugin is an add-on for [WPCasa](https://wordpress.org/plugins/wpcasa/) and Polylang and will NOT work without the core plugins.
 
