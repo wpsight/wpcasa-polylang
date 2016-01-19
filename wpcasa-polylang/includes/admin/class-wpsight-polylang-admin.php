@@ -30,6 +30,9 @@ class WPSight_Polylang_Admin {
 		
 		// Remove agent desription from copied post meta
 		add_filter( 'pll_copy_post_metas', array( $this, 'copy_post_metas' ) );
+		
+		// Get translated listing images
+		add_filter( 'wpsight_meta_box_listing_images_fields', array( $this, 'listing_images' ) );
 
 	}
 	
@@ -224,9 +227,10 @@ class WPSight_Polylang_Admin {
 	/**
 	 *	copy_post_metas()
 	 *	
-	 *	Remove agent desription from
+	 *	Remove agent desription and
+	 *	optionally the gallery from
 	 *	copied post meta as we will
-	 *	set it ourselves.
+	 *	set these values ourselves.
 	 *	
 	 *	@access	public
 	 *	@param	array	$post_meta
@@ -235,10 +239,112 @@ class WPSight_Polylang_Admin {
 	 */
 	public function copy_post_metas( $post_meta ) {
 		
-		if( ( $key = array_search( '_agent_description', $post_meta ) ) !== false )
-			unset( $post_meta[ $key ] );
+		// Don't copy agent description
+		
+		if( ( $key_description = array_search( '_agent_description', $post_meta ) ) !== false )
+			unset( $post_meta[ $key_description ] );
+			
+		// Don't copy image gallery if media translation is enabled
+		
+		$options = get_option( 'polylang' );
+		
+		$media_support = isset( $options['media_support'] ) && $options['media_support'] ? true : false;
+		
+		if( ( $key_gallery = array_search( '_gallery', $post_meta ) ) !== false && $media_support )
+			unset( $post_meta[ $key_gallery ] );
 			
 		return $post_meta;
+		
+	}
+	
+	/**
+	 *	listing_images()
+	 *	
+	 *	When Polylang media translations
+	 *	are enabled, create a callback
+	 *	to set the default gallery with
+	 *	translated images.
+	 *	
+	 *	@access	public
+	 *	@param	array	$fields
+	 *	@uses	get_option()
+	 *	@return	array
+	 *	
+	 *	@since 1.0.0
+	 */
+	public function listing_images( $fields ) {
+	
+		$options = get_option( 'polylang' );
+		
+		$media_support = isset( $options['media_support'] ) && $options['media_support'] ? true : false;
+		
+		if( $media_support ) {			
+			// Set default value of gallery
+			$fields['images']['default'] = array( $this, 'listing_images_default' );
+		}
+	
+		return $fields;
+	
+	}
+	
+	/**
+	 *	listing_images_default()
+	 *	
+	 *	Callback function to set the default
+	 *	gallery with translated images if
+	 *	these are available.
+	 *	
+	 *	@access	public
+	 *	@param	array	$field_args
+	 *	@param	object	$field
+	 *	@uses	pll_get_post_language()
+	 *	@uses	pll_default_language()
+	 *	@uses	pll_get_post()
+	 *	@uses	get_post_meta()
+	 *	@return	array
+	 *	
+	 *	@since 1.0.0
+	 */
+	public function listing_images_default( $field_args, $field ) {
+		
+		// Get post language
+		$post_lang = pll_get_post_language( $field->object_id );
+		
+		// Get from post early
+		$from_post = isset( $_REQUEST['from_post'] ) ? $_REQUEST['from_post'] : false;
+		
+		// If from_post is not available anymore, use current post ID
+		
+		if( ! $from_post )
+			$from_post = $field->object_id;
+		
+		// Get post ID of default language
+		$origial = pll_get_post( $from_post, pll_default_language() );
+		
+		// Get original gallery
+		$gallery = get_post_meta( $origial, '_gallery', true );
+		
+		if( empty( $gallery ) )
+			return;
+		
+		// Set up translated gallery
+		$gallery_lang = array();
+		
+		foreach( $gallery as $id => $url ) {
+			
+			// Get ID of image translation
+			$id_lang = pll_get_post( $id, $post_lang );
+			
+			if( $id_lang )
+				// When available, set new ID
+				$gallery_lang[ $id_lang ] = $url;
+
+		}
+		
+		// If there are image translations, set new gallery default
+		
+		if( ! empty( $gallery_lang ) )
+			return $gallery_lang;
 		
 	}
 
