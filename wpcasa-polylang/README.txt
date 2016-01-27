@@ -8,7 +8,7 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Add support for Polylang plugin to manage property data in multiple languages.
+Add support for Polylang to manage WPCasa property data in multiple languages.
 
 == Description ==
 
