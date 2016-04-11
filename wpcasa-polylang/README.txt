@@ -3,8 +3,8 @@ Contributors: wpsight, simonrimkus
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZRR56U2VTPZAQ
 Tags: polylang, bilingual, international, language, localization, multilanguage, multilingual, translate, translation, listing, property, wpcasa, real estate, realestate
 Requires at least: 4.0
-Tested up to: 4.4.1
-Stable tag: 1.0.0
+Tested up to: 4.5
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,7 +36,7 @@ If you prefer to install the plugin manually, you need to download it to your lo
 
 == Frequently Asked Questions ==
 
-= Will this plugin work without WPCasa or Polylang?
+= Will this plugin work without WPCasa or Polylang? =
 
 No, this is an add-on plugin for the WPCasa real estate framework in combination with Polylang and will not work without the corresponding core plugins.
 
@@ -48,6 +48,11 @@ No, this is an add-on plugin for the WPCasa real estate framework in combination
 4. Polylang language switcher in menu
 
 == Changelog ==
+
+= 1.0.1 =
+* Tested up to WordPress 4.5
+* Added missing post meta (translate) to wpml-config.xml
+* Added theme options to wpml-config.xml
 
 = 1.0.0 =
 * Initial release
