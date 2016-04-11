@@ -17,7 +17,7 @@ class WPSight_Polylang_Admin {
 		add_action( 'updated_post_meta', array( $this, 'updated_post_meta' ), 10, 4 );
 		
 		// Add new field to maintain default description
-		add_filter( 'wpsight_meta_box_user_fields', array( $this, 'user_fields' ) );
+		// add_filter( 'wpsight_meta_box_user_fields', array( $this, 'user_fields' ) );
 		
 		// Set agent description for each language
 		add_action( 'wpsight_profile_agent_update_save_options', array( $this, 'agent_description_options' ), 10, 2 );
