@@ -1,6 +1,6 @@
 {
   "name": "wpcasa-polylang",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Add support for Polylang plugin to manage property data in multiple languages.",
   "main": "Gruntfile.js",
   "repository": {
