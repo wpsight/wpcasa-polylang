@@ -254,6 +254,9 @@ class WPSight_Polylang {
 	 */
 	public function options_pages( $option, $name ) {
 		
+		if( ! function_exists( 'pll_current_language' ) )
+			return get_post( $option );
+		
 		$pages = array(
 			'listings_page',
 			'favorites_page',
