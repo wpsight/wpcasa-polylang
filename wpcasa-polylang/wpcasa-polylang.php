@@ -90,7 +90,7 @@ class WPSight_Polylang {
 		if ( ! isset( $wpsight->polylang ) ) {
 			$wpsight->polylang = new self();
 		}
-		do_action_ref_array( 'wpsight_init_polylang', array( &$wpsight ) );
+		do_action_ref_array( 'wpsight_init_polylang', array( $wpsight ) );
 
 		return $wpsight->polylang;
 	}
