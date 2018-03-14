@@ -122,11 +122,15 @@ class WPSight_Polylang {
 	 *	@since 1.0.0
 	 */
 	public function details_register() {
+		
+		if( function_exists( 'pll_register_string' ) ) {
 
-		$details = wpsight_details();
-
-		foreach( $details as $key => $detail )
-			pll_register_string( 'Listing Details', wpsight_get_detail( $key, 'label' ), WPSIGHT_NAME );
+			$details = wpsight_details();
+	
+			foreach( $details as $key => $detail )
+				pll_register_string( 'Listing Details', wpsight_get_detail( $key, 'label' ), WPSIGHT_NAME );
+			
+		}
 
 	}
 
@@ -142,9 +146,13 @@ class WPSight_Polylang {
 	 *	@since 1.0.0
 	 */
 	public function details_filter( $details ) {
+		
+		if( function_exists( 'pll__' ) ) {
 
-		foreach( $details as $k => $v )
-			$details[ $k ]['label'] = pll__( $details[ $k ]['label'] );
+			foreach( $details as $k => $v )
+				$details[ $k ]['label'] = pll__( $details[ $k ]['label'] );
+			
+		}
 
 		return $details;
 
@@ -163,12 +171,16 @@ class WPSight_Polylang {
 	 *	@since 1.0.0
 	 */
 	public function rental_periods_register() {
-
-		$periods = wpsight_rental_periods();
 		
-		foreach( $periods as $period => $label ) {
-			$rental_period = wpsight_get_rental_period( $period );		
-			pll_register_string( 'Listing Periods', $rental_period, WPSIGHT_NAME );
+		if( function_exists( 'pll_register_string' ) ) {
+
+			$periods = wpsight_rental_periods();
+			
+			foreach( $periods as $period => $label ) {
+				$rental_period = wpsight_get_rental_period( $period );		
+				pll_register_string( 'Listing Periods', $rental_period, WPSIGHT_NAME );
+			}
+		
 		}
 
 	}
@@ -184,9 +196,13 @@ class WPSight_Polylang {
 	 *	@since 1.0.0
 	 */
 	public function rental_periods_filter( $periods ) {
+		
+		if( function_exists( 'pll__' ) ) {
 
-		foreach( $periods as $k => $v )
-			$periods[ $k ] = pll__( $periods[ $k ] );
+			foreach( $periods as $k => $v )
+				$periods[ $k ] = pll__( $periods[ $k ] );
+			
+		}
 
 		return $periods;
 
@@ -206,7 +222,7 @@ class WPSight_Polylang {
 	 */
 	public function listing_labels_register() {
 
-		if( ! function_exists( 'wpsight_listing_labels' ) )
+		if( ! function_exists( 'wpsight_listing_labels' ) || ! function_exists( 'pll_register_string' ) )
 			return false;
 
 		$labels = wpsight_listing_labels();
@@ -232,9 +248,13 @@ class WPSight_Polylang {
 
 		if( ! function_exists( 'wpsight_listing_labels' ) )
 			return false;
+			
+		if( function_exists( 'pll__' ) ) {
 
-		foreach( $labels as $k => $v )
-			$labels[ $k ]['label'] = pll__( $labels[ $k ]['label'] );
+			foreach( $labels as $k => $v )
+				$labels[ $k ]['label'] = pll__( $labels[ $k ]['label'] );
+			
+		}
 
 		return $labels;
 
