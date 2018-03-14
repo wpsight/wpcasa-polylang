@@ -3,11 +3,11 @@
 Plugin Name: WPCasa Polylang
 Plugin URI: https://wpcasa.com/downloads/wpcasa-polylang
 Description: Add support for Polylang to manage WPCasa property data in multiple languages.
-Version: 1.0.1
+Version: 1.1.0
 Author: WPSight
 Author URI: http://wpsight.com
 Requires at least: 4.0
-Tested up to: 4.6
+Tested up to: 4.9
 Text Domain: wpcasa-polylang
 Domain Path: /languages
 
@@ -40,7 +40,7 @@ class WPSight_Polylang {
 
 		define( 'WPSIGHT_POLYLANG_NAME', 'WPCasa Polylang' );
 		define( 'WPSIGHT_POLYLANG_DOMAIN', 'wpcasa-polylang' );
-		define( 'WPSIGHT_POLYLANG_VERSION', '1.0.1' );
+		define( 'WPSIGHT_POLYLANG_VERSION', '1.1.0' );
 		define( 'WPSIGHT_POLYLANG_PLUGIN_DIR', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 		define( 'WPSIGHT_POLYLANG_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
 
