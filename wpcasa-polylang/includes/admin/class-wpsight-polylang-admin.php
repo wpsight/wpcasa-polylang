@@ -71,10 +71,10 @@ class WPSight_Polylang_Admin {
 		if( in_array( $meta_key, $update_meta ) ) {
 			
 			// Get all translations of current listing
-			$post_ids = $polylang->model->get_translations( wpsight_post_type(), $object_id );
+			$post_ids = pll_get_post_translations( $object_id );
 			
 			// Update all translations			
-			foreach( $post_ids as $post_id )
+			foreach( $post_ids as $post_lang => $post_id )
 				update_post_meta( $post_id, $meta_key, $_meta_value );
 			
 		}
