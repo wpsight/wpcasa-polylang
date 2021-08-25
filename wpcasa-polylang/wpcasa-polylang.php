@@ -3,7 +3,7 @@
 Plugin Name: WPCasa Polylang
 Plugin URI: https://wpcasa.com/downloads/wpcasa-polylang
 Description: Add support for Polylang to manage WPCasa property data in multiple languages.
-Version: 1.1.0
+Version: 1.1.1
 Author: WPSight
 Author URI: http://wpsight.com
 Requires at least: 4.0
