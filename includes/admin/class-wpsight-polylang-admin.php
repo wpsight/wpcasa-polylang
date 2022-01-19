@@ -49,14 +49,12 @@ class WPSight_Polylang_Admin {
 	 *	@param	string	$meta_key
 	 *	@param	string	$_meta_value
 	 *	@uses	wpsight_post_type()
-	 *	@uses	$polylang->model->get_translations()
 	 *	@uses	update_post_meta()
 	 *	
 	 *	@since 1.0.0
 	 */
 	public function updated_post_meta( $meta_id, $object_id, $meta_key, $_meta_value ) {
-		global $polylang;
-		
+
 		// Set meta keys to be updated
 		
 		$update_meta = array(
@@ -71,7 +69,7 @@ class WPSight_Polylang_Admin {
 		if( in_array( $meta_key, $update_meta ) ) {
 			
 			// Get all translations of current listing
-			$post_ids = pll_get_post_translations( $object_id );
+            $post_ids = pll_get_post_translations( $object_id );
 			
 			// Update all translations			
 			foreach( $post_ids as $post_lang => $post_id )
@@ -125,7 +123,7 @@ class WPSight_Polylang_Admin {
 		// Set descriptions in all languages
 		
 		foreach( pll_languages_list() as $lang )
-			$agent_options[ '_agent_description_' . $lang ] = trim( $_POST[ 'description_' . $lang ] );
+			$agent_options[ '_agent_description_' . $lang ] = sanitize_text_field( trim( $_POST[ 'description_' . $lang ] ) );
 		
 		return $agent_options;
 			
@@ -180,10 +178,10 @@ class WPSight_Polylang_Admin {
 	public function listing_agent_description( $fields ) {
 		
 		// Get post lang early
-		$new_lang = isset( $_REQUEST['new_lang'] ) ? $_REQUEST['new_lang'] : false;
+		$new_lang = isset( $_REQUEST[ 'new_lang' ] ) ? sanitize_text_field( $_REQUEST[ 'new_lang' ] ) : false;
 		
 		if( $new_lang ) {			
-			// Set default value of desription
+			// Set default value of description
 			$fields['description']['default'] = array( $this, 'listing_agent_description_default' );
 		}
 		
@@ -241,16 +239,16 @@ class WPSight_Polylang_Admin {
 		
 		// Don't copy agent description
 		
-		if( ( $key_description = array_search( '_agent_description', $post_meta ) ) !== false )
+		if( false !== ( $key_description = array_search( '_agent_description', $post_meta ) ) )
 			unset( $post_meta[ $key_description ] );
 			
 		// Don't copy image gallery if media translation is enabled
 		
 		$options = get_option( 'polylang' );
 		
-		$media_support = isset( $options['media_support'] ) && $options['media_support'] ? true : false;
+		$media_support = isset( $options['media_support'] ) && $options['media_support']  ? true : false;
 		
-		if( ( $key_gallery = array_search( '_gallery', $post_meta ) ) !== false && $media_support )
+		if( ( false !== $key_gallery = array_search( '_gallery', $post_meta ) ) && $media_support )
 			unset( $post_meta[ $key_gallery ] );
 			
 		return $post_meta;
@@ -311,7 +309,7 @@ class WPSight_Polylang_Admin {
 		$post_lang = pll_get_post_language( $field->object_id );
 		
 		// Get from post early
-		$from_post = isset( $_REQUEST['from_post'] ) ? $_REQUEST['from_post'] : false;
+		$from_post = isset( $_REQUEST[ 'from_post' ] ) ? sanitize_text_field( $_REQUEST[ 'from_post' ] ) : false;
 		
 		// If from_post is not available anymore, use current post ID
 		
@@ -319,14 +317,14 @@ class WPSight_Polylang_Admin {
 			$from_post = $field->object_id;
 		
 		// Get post ID of default language
-		$origial = pll_get_post( $from_post, pll_default_language() );
+		$original = pll_get_post( $from_post, pll_default_language() );
 		
 		// Get original gallery
-		$gallery = get_post_meta( $origial, '_gallery', true );
+		$gallery = get_post_meta( $original, '_gallery', true );
 		
 		if( empty( $gallery ) )
-			return;
-		
+			return array();
+
 		// Set up translated gallery
 		$gallery_lang = array();
 		
@@ -343,8 +341,10 @@ class WPSight_Polylang_Admin {
 		
 		// If there are image translations, set new gallery default
 		
-		if( ! empty( $gallery_lang ) )
-			return $gallery_lang;
+		if( empty( $gallery_lang ) )
+            return array();
+
+        return $gallery_lang;
 		
 	}
 
