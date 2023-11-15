@@ -1,9 +1,9 @@
 === WPCasa Polylang ===
-Contributors: wpsight, joehana, kybernetikservices
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7EVKNVA7QFXZ8
+Contributors: wpsight, kybernetikservices, joehana
+Donate link: https://www.paypal.com/donate/?hosted_button_id=SYJNVSP2BKTQ4
 Tags: polylang, bilingual, international, language, localization, multilanguage, multilingual, translate, translation, listing, property, wpcasa, real estate, realestate
 Requires at least: 4.0
-Tested up to: 5.9
+Tested up to: 6.4
 Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -19,8 +19,8 @@ The WPCasa Polylang add-on is a bridge for the Polylang plugin to make sure all 
 WPCasa is a WordPress solution that provides an intuitive way to manage property listings and create first-class real estate websites.
 
 * Website: [wpcasa.com](https://wpcasa.com)
-* Demo: [demo.wpcasa.com](http://demo.wpcasa.com)
-* Documentation: [docs.wpcasa.com](http://docs.wpcasa.com)
+* Demo: [demo.wpcasa.com](https://demo.wpcasa.com)
+* Documentation: [docs.wpcasa.com](https://docs.wpcasa.com)
 
 == Installation ==
 
