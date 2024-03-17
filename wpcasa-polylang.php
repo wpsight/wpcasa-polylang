@@ -374,7 +374,7 @@ class WPSight_Polylang {
  */
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-if( is_plugin_active( 'polylang/polylang.php' ) || is_plugin_active( 'polylang-pro/polylang.php' ) ) {
+if( defined( 'POLYLANG_VERSION' ) ) {
 
     // Initialize plugin on wpsight_init
     add_action( 'wpsight_init', array( 'WPSight_Polylang', 'init' ) );
