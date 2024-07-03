@@ -1,19 +1,25 @@
 <?php
-/*
-Plugin Name: WPCasa Polylang
-Plugin URI: https://wpcasa.com/downloads/wpcasa-polylang
-Description: Add support for Polylang to manage WPCasa property data in multiple languages.
-Version: 1.1.1
-Author: WPSight
-Author URI: http://wpsight.com
-Requires at least: 4.0
-Tested up to: 5.9
-Text Domain: wpcasa-polylang
-Domain Path: /languages
-Copyright: 2015 Simon Rimkus
-License: GNU General Public License v2.0 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-*/
+/**
+ * WPCasa Polylang
+ *
+ * @package           WPCasaPolylang
+ * @author            WPSight
+ * @copyright         2024 Kybernetik Services GmbH
+ * @license           GPL-2.0-or-later
+ *
+ * @wordpress-plugin
+ * Plugin Name:       WPCasa Polylang
+ * Plugin URI:        https://wpcasa.com/downloads/wpcasa-polylang
+ * Description:       Add support for Polylang to manage WPCasa property data in multiple languages.
+ * Version:           1.2.0
+ * Requires at least: 6.2
+ * Requires PHP:      7.2
+ * Requires Plugins:  wpcasa, polylang
+ * Author:            WPSight
+ * Author URI:        https://wpcasa.com
+ * License:           GPL v2 or later
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ */
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) )
@@ -39,7 +45,6 @@ class WPSight_Polylang {
 
         define( 'WPSIGHT_POLYLANG_NAME', 'WPCasa Polylang' );
         define( 'WPSIGHT_POLYLANG_DOMAIN', 'wpcasa-polylang' );
-        define( 'WPSIGHT_POLYLANG_VERSION', '1.1.1' );
         define( 'WPSIGHT_POLYLANG_PLUGIN_DIR', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
         define( 'WPSIGHT_POLYLANG_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
 
@@ -47,9 +52,6 @@ class WPSight_Polylang {
             include( WPSIGHT_POLYLANG_PLUGIN_DIR . '/includes/admin/class-wpsight-polylang-admin.php' );
             $this->admin = new WPSight_Polylang_Admin();
         }
-
-        // Load text domain
-        add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
         // Register text strings with Polylang
 
@@ -92,20 +94,6 @@ class WPSight_Polylang {
         do_action_ref_array( 'wpsight_init_polylang', array( $wpsight ) );
 
         return $wpsight->polylang;
-    }
-
-    /**
-     *	load_plugin_textdomain()
-     *
-     *	Set up localization for this plugin
-     *	loading the text domain.
-     *
-     *	@uses	load_plugin_textdomain()
-     *
-     *	@since 1.0.0
-     */
-    public function load_plugin_textdomain() {
-        load_plugin_textdomain( 'wpcasa-polylang', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
     }
 
     /**
