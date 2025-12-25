@@ -3,7 +3,7 @@ Contributors: wpsight, kybernetikservices
 Donate link: https://www.paypal.com/donate/?hosted_button_id=SYJNVSP2BKTQ4
 Tags: polylang, bilingual, international, language, localization, multilanguage, multilingual, translate, translation, listing, property, wpcasa, real estate, realestate
 Requires at least: 6.2
-Tested up to: 6.6
+Tested up to: 6.9
 Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -34,6 +34,7 @@ Many thanks to all of them for contributing and making WPCasa Polylang even bett
 [Kybernetik Services](https://www.kybernetik-services.com/?utm_source=wordpress_org&utm_medium=plugin&utm_campaign=wpcasa&utm_content=readme)
 [Joe Hana](https://wordpress.org/support/users/joehana/)
 [codestylist](https://wordpress.org/support/users/codestylist/)
+[sebastienserre](https://github.com/sebastienserre)
 
 == Installation ==
 
